@@ -1,0 +1,27 @@
+{% extends "postbase.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<!-- Display uploaded images -->
+
+<div class="flex justify-center items-center mt-16 mb-16">
+    <div class="w-full max-w-4xl">
+        {% for image in images %}
+        <div class="bg-black rounded-lg p-6 mb-4">
+            <div class="flex items-center mb-2">
+                <a href="{% url 'user_profile:profile' image.user.username %}" class="flex items-center no-underline">
+                    <img class="w-10 h-10 rounded-full" src="{{ image.user.profile.photo.url }}" alt="profile_pic">
+                    <span class="text-white text-lg font-bold px-4">{{ image.user.username }}</span>
+                </a>
+            </div>
+            <img src="{{ image.image.url }}" class="w-full h-auto rounded-lg" alt="Post Image">
+            <div>
+                <p class="text-white text-left p-2">{{ image.description }}</p>
+            </div>
+            <small class="block text-left p-2">Date: {{ image.created|date:"F j, Y" }}</small>
+        </div>
+        {% empty %}
+        <p class="text-white">No images uploaded yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

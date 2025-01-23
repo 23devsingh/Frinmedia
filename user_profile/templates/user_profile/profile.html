@@ -1,0 +1,58 @@
+{% extends "profile_base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<!-- Display uploaded images -->
+<div style="margin-top: 15px; margin-bottom: 70px;">
+    <div class="profile-container">
+        <div>
+            <img src="{{ profile.photo.url }}" alt="Profile Image" style="width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid #007FFF;" class='mx-auto'>
+        </div>
+    </div>
+    <div class="profile-container" style="margin-top: 10px;">
+        <h3 class="text-2xl font-bold">{{profile.user.username}}</h3>
+        <p><strong>Bio:</strong> {{ profile.bio }}</p>
+    </div>
+    <hr style="margin-top:15px;" class="border-blue-500 border-2 my-4">
+    <div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 50%;
+            margin: 0 auto; margin-top: 1px;">
+        <!-- Only show the 'Friends' and 'Requests' links for the logged-in user-->
+        {% if profile.user == request.user %}
+        <a href="#"><h3 class="inline-block bg-blue-500 text-white px-4 py-2 mr-2">Friends</h3></a>
+        <a href="#"><h3 class="inline-block bg-green-500 text-white px-4 py-2">Requests</h3></a>
+        {% endif %}
+    </div>
+</div>
+    <div class="flex justify-center items-center mt-16 mb-16">
+        <div class="w-full max-w-4xl">
+            {% for image in images %}
+            <div class="bg-black rounded-lg p-6 mb-4">
+                <div class="flex items-center mb-2">
+                    <a href="{% url 'user_profile:profile' image.user.username %}" class="flex items-center no-underline">
+                        <img class="w-10 h-10 rounded-full" src="{{ image.user.profile.photo.url }}" alt="profile_pic">
+                        <span class="text-white text-lg font-bold px-4">{{ image.user.username }}</span>
+                    </a>
+                </div>
+                <img src="{{ image.image.url }}" class="w-full h-auto rounded-lg" alt="Post Image">
+                <div>
+                    <p class="text-white text-left p-2">{{ image.description }}</p>
+                </div>
+                <small class="block text-left p-2">Date: {{ image.created|date:"F j, Y" }}</small>
+            </div>
+            {% empty %}
+            <p class="text-white">No images uploaded yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% endblock %}
+
+
+
+
+
+
+
+

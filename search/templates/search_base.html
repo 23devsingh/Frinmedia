@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/post_image.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style src="jquery-3.7.1.min.js"></style>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div id="logo">
+        <div class="logo" id="#top" ><span>Friendsmedia</span></div>
+    </div>
+    <div>
+        {% block content %}
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }} " style="list-style: none; color:rgb(236, 60, 60);">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+        {% endblock %}
+    </div>
+    <footer>
+        <div id="bottom-links"  style="padding: 15px;">
+            <ul >
+                <li><a href="{% url 'account:home' %}"><img src="{% static 'account/images/icons-svg/home-white.svg' %}" class="links-images"></a></li>
+                <li><a href="{% url 'search:search' %}"><img src=" {% static 'account/images/icons-svg/search-white.svg' %}" alt="search" class="links-images"></a></li>
+                <li><a href="{% url 'chat:chat' %}"><img src=" {% static 'account/images/icons-svg/mail-white.svg' %}" alt="messages" class="links-images"></a></li>
+                <li><a href="{% url 'user_profile:profile' username=request.user.username %}"><img src=" {% static 'account/images/icons-svg/user-white.svg' %}" alt="user" class="links-images"></a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/post_image.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <style src="jquery-3.7.1.min.js"></style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+
+    <div class="flex items-center">
+        <div id="logo">
+            <div class="logo" id="#top"><span>Friendsmedia</span></div>
+        </div>
+        <div class="relative ml-auto" style="padding: 10px;">
+            <div>
+            <button type="button" class="relative flex justify-end max-w-xs  rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                <span class="absolute -inset-1.5"></span>
+                <span class="sr-only">Open user menu</span>
+                <img class="size-10 rounded-full" src="https://cdn-icons-png.freepik.com/512/8974/8974939.png" alt="profile_pic">
+            </button>
+            </div>
+            <div
+            id="dropdownMenu"
+            class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="user-menu-button" style="background-color: black;">
+            <a href="{% url 'account:edit' %}"
+                class="block px-4 py-2 text-sm text-white-700 hover:bg-black-100"
+                role="menuitem">Edit Account</a>
+            <a href="{% url 'myposts:post_image_upload' %}"
+                class="block px-4 py-2 text-sm text-white-700 hover:bg-black-100"
+                role="menuitem">Post</a>
+            <a href="{% url 'account:logout' %}"
+                class="block px-4 py-2 text-sm text-white-700 hover:bg-black-100"
+                role="menuitem">logout</a>
+        </div>
+        </div>
+        </div>
+    </div>
+
+
+
+
+    <!--<div id="logo">
+        <div class="logo" id="#top"><span>Friendsmedia</span></div>
+    </div>-->
+    <div>
+        {% block content %}
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }} " style="list-style: none; color:rgb(236, 60, 60);">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+        {% endblock %}
+    </div>
+    <footer>
+        <div id="bottom-links" style="padding: 15px;">
+            <ul >
+                <li><a href="{% url 'account:home' %}"><img src="{% static 'account/images/icons-svg/home-white.svg' %}" class="links-images"></a></li>
+                <li><a href="{% url 'search:search' %}"><img src=" {% static 'account/images/icons-svg/search-white.svg' %}" alt="search" class="links-images"></a></li>
+                <li><a href="{% url 'chat:chat' %}"><img src=" {% static 'account/images/icons-svg/mail-white.svg' %}" alt="messages" class="links-images"></a></li>
+                <li><a href="{% url 'user_profile:profile' request.user.username %}"><img src=" {% static 'account/images/icons-svg/user-white.svg' %}" alt="user" class="links-images"></a></li>
+            </ul>
+        </div>
+    </footer>
+    <!-- JavaScript for Dropdown -->
+<script>
+    const userMenuButton = document.getElementById('user-menu-button');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    // Toggle dropdown visibility on button click
+    userMenuButton.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', (event) => {
+        if (!userMenuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+    });
+</script>
+</body>
+</html>

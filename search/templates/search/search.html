@@ -1,0 +1,40 @@
+{% extends "search_base.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<!-- Display uploaded images -->
+<div>
+    <br>
+<form method="GET" action="{% url 'search:search' %}">
+    <input type="text" name="q" id="search" placeholder="Search friends here..." value="{{ query }}" i style="border: 2px solid white ;border-radius: 10px; padding: 5px;">
+    <input type="submit" name="search-user" id="submit" value="Search" style="border: 2px solid white ;border-radius: 20px; padding: 2px">
+</form>
+<hr>
+<h3 style="text-decoration: underline; padding: 3px;">Search Results</h3>
+
+<div class="search_class" style="margin-top: 30px;">
+    <div class="tailwind-scope">
+        <ul style="display: block; text-align: left; padding-left: 15px" role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
+            {% if users %}
+            {% for user in users %}
+            <li>
+                <div class="flex items-center gap-x-6">
+                    <a href="{% url 'user_profile:profile' user.username %}" style="display: flex; align-items: center; text-decoration: none;">
+                    <img class="size-16 rounded-full" src="{{ user.profile.photo.url }}" alt="Profile Pic" style="padding: 4px; margin: 5px;">
+                    <div>
+                    <h3 class="text-base/7 font-semibold tracking-tight text-white-800">{{ user.username }}</h3>
+                    <p class="text-sm/6 font-semibold text-blue-400">{{ user.first_name}} {{ user.last_name}}</p>
+                    </div>
+                    </a>
+                </div>
+                </li>
+            <br>
+            <br>
+            {% endfor %}
+            {% else %}
+            <li>No users found.</li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <style src="jquery-3.7.1.min.js"></style>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div id="logo">
+        <div class="logo" id="#top"><span>Friendsmedia</span></div>
+    </div>
+    <div>
+        {% block content %}
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }} " style="list-style: none; color:rgb(236, 60, 60);">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Log-in{% endblock %}
+{% block content %}
+    <main>
+        <h2>Login</h2>
+
+        <!-- Display form errors if any -->
+        <!-- Display form errors if any -->
+        {% if form.errors %}
+            <div class="error-messages">
+                <ul style="list-style: none; color:rgb(236, 60, 60);">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+
+
+        <form method="POST">
+            {% csrf_token %}
+            <label><span class="input-name"></span><input type="text" name="username" id="username" placeholder=" Username, Email"></label>
+            <br>
+            <label><span class="input-name"></span><input type="text" name="password" id="password" placeholder="Password"></label>
+            <br>
+            <a href="#" class="fog-pass">Forget password</a>
+            <br>
+            <input type="submit" name="submit" id="submit" value="Login">
+        </form>
+    </main>
+    <p class="signup">Not in Friendsmedia? <a href="{% url 'account:signup' %}" id="signup">Sign up</a></p>
+{% endblock %}
+
+
+{% block extra_scripts %}
+    <script>
+        // Display the floating error message if there are non-field errors
+        {% if form.non_field_errors %}
+            document.addEventListener("DOMContentLoaded", function() {
+                var errorMessage = document.getElementById('error-message');
+                errorMessage.style.display = 'block';
+                setTimeout(function() {
+                    errorMessage.style.opacity = 1;
+                    errorMessage.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        {% endif %}
+    </script>
+{% endblock %}
